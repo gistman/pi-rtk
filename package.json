@@ -1,0 +1,50 @@
+{
+  "name": "pi-rtk",
+  "version": "0.1.0",
+  "description": "Pi extension package that routes bash and user_bash through RTK rewrites with safe passthrough fallbacks.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./example": {
+      "types": "./dist/example.d.ts",
+      "default": "./dist/example.js"
+    }
+  },
+  "files": [
+    "src",
+    "dist",
+    "README.md",
+    "research.md"
+  ],
+  "keywords": [
+    "pi-package",
+    "pi",
+    "rtk",
+    "coding-agent"
+  ],
+  "pi": {
+    "extensions": [
+      "./src/index.ts"
+    ]
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "clean": "rm -rf dist coverage .vitest",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "peerDependencies": {
+    "@mariozechner/pi-coding-agent": "*"
+  },
+  "devDependencies": {
+    "@mariozechner/pi-coding-agent": "^0.57.1",
+    "@types/node": "^24.6.0",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  }
+}
