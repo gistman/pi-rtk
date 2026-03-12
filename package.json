@@ -16,7 +16,6 @@
     }
   },
   "files": [
-    "src",
     "dist",
     "README.md",
     "research.md"
@@ -29,12 +28,14 @@
   ],
   "pi": {
     "extensions": [
-      "./src/index.ts"
+      "./dist/index.js"
     ]
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "clean": "rm -rf dist coverage .vitest",
+    "prepare": "npm run build",
+    "prepack": "npm run clean",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },

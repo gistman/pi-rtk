@@ -40,36 +40,44 @@ The tool override is implemented by registering a `bash` tool with the same name
 
 ### As a Pi package
 
-```bash
-pi install /absolute/path/to/pi-rtk
+Published installs resolve the extension from the built artifact declared in `package.json`:
+
+```json
+{
+  "pi": {
+    "extensions": ["./dist/index.js"]
+  }
+}
 ```
 
-Or publish and install through npm:
+That matches Pi's current package loader, which accepts either `.js` or `.ts` extension entries.
+
+For npm-published installs:
 
 ```bash
 pi install npm:pi-rtk
 ```
 
-`package.json` includes:
+For a local checkout added as a package path, build first because Pi reads the repo in place and does not compile it for you:
 
-```json
-{
-  "pi": {
-    "extensions": ["./src/index.ts"]
-  }
-}
+```bash
+npm install
+npm run build
+pi install /absolute/path/to/pi-rtk
 ```
 
-so Pi can discover the extension automatically.
-
 ### Local development
+
+For temporary source-based development, load the TypeScript entrypoint directly instead of using package install semantics:
 
 ```bash
 npm install
 pi -e ./src/index.ts
 ```
 
-Build output is still produced in `dist/` for standard package exports:
+Git-based package installs should also work after `npm install` because this repo's `prepare` script builds `dist/`.
+
+Standard package exports are also built into `dist/`:
 
 ```bash
 npm run build
@@ -103,6 +111,7 @@ Environment variable fallbacks:
 - The tool override is intentionally limited to bash and `user_bash`; RTK support for other Pi tools is out of scope here.
 - Missing-RTK warning delivery depends on the execution path: user `!` flows use Pi UI notifications, model-called `bash` falls back to stderr because tool execution does not get a UI context in the exported tool wrapper.
 - The package tracks the current Pi extension API shape validated in `research.md`. If upstream APIs move, the exported seams here should be the only places that need adjustment.
+- Pi can currently load both `.ts` and `.js` extension entries, but this package intentionally ships and declares the built `.js` entry so published installs do not depend on source files being present.
 
 ## Tests
 

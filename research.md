@@ -58,6 +58,17 @@ Relevant upstream file:
 
 - `packages/coding-agent/src/modes/interactive/components/tool-execution.ts`
 
+### 5. Pi package manifests currently accept both `.ts` and `.js` extension entries
+
+Pi's extension loader resolves `pi.extensions` paths relative to the package root, then loads either `.ts` or `.js` files through the same loader path. Current package docs also describe manifest-relative package resources and npm/git/local install semantics separately.
+
+That means source TypeScript entrypoints are supported today, but a published npm package does not need to rely on them when it already builds `dist/index.js`.
+
+Relevant upstream files:
+
+- `packages/coding-agent/src/core/extensions/loader.ts`
+- `packages/coding-agent/docs/packages.md`
+
 ## RTK CLI Conclusions
 
 ### 1. `rtk rewrite` is the correct integration point
@@ -100,6 +111,7 @@ Relevant upstream files:
 - Use `user_bash` returning `operations`, not a full custom result, to preserve Pi UX
 - Keep RTK runtime coupling optional and degrade to passthrough when absent
 - Share timeout budget across rewrite and execution so timeout semantics stay honest
+- Declare `./dist/index.js` in `pi.extensions` so published installs use the built artifact, while local source development stays explicit via `pi -e ./src/index.ts`
 
 ## Known Uncertainties
 
