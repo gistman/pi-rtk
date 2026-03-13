@@ -38,9 +38,27 @@ The tool override is implemented by registering a `bash` tool with the same name
 
 ## Install
 
-### As a Pi package
+### Preferred: install from the GitHub repo
 
-Published installs resolve the extension from the built artifact declared in `package.json`:
+Right now the recommended path is to install from the repo directly, not from npm. That keeps testing aligned with the exact GitHub source and avoids any confusion about whether a package release has happened yet.
+
+```bash
+pi install github:gistman/pi-rtk
+```
+
+If Pi fetches the repo source without building it automatically in your environment, use a local checkout instead:
+
+```bash
+git clone git@github.com:gistman/pi-rtk.git
+cd pi-rtk
+npm install
+npm run build
+pi install /absolute/path/to/pi-rtk
+```
+
+### Package semantics
+
+The extension is discovered from the built artifact declared in `package.json`:
 
 ```json
 {
@@ -52,19 +70,15 @@ Published installs resolve the extension from the built artifact declared in `pa
 
 That matches Pi's current package loader, which accepts either `.js` or `.ts` extension entries.
 
-For npm-published installs:
+### Optional: npm-published install
+
+Once the package is actually published to npm, this should work too:
 
 ```bash
 pi install npm:pi-rtk
 ```
 
-For a local checkout added as a package path, build first because Pi reads the repo in place and does not compile it for you:
-
-```bash
-npm install
-npm run build
-pi install /absolute/path/to/pi-rtk
-```
+Until then, prefer the GitHub repo install above.
 
 ### Local development
 
