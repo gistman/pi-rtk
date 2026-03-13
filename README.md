@@ -40,13 +40,13 @@ The tool override is implemented by registering a `bash` tool with the same name
 
 ### Preferred: install from the GitHub repo
 
-Right now the recommended path is to install from the repo directly, not from npm. That keeps testing aligned with the exact GitHub source and avoids any confusion about whether a package release has happened yet.
+Right now the recommended path is to install from the repo directly via Pi's supported `git:` source syntax, not from npm. That keeps testing aligned with the exact GitHub source and avoids any confusion about whether a package release has happened yet.
 
 ```bash
-pi install github:gistman/pi-rtk
+pi install git:github.com/gistman/pi-rtk
 ```
 
-If Pi fetches the repo source without building it automatically in your environment, use a local checkout instead:
+If you prefer a manual local checkout, use this instead:
 
 ```bash
 git clone git@github.com:gistman/pi-rtk.git
